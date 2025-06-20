@@ -1,22 +1,38 @@
-"use client";
-
-import { products, ingredients } from "@/lib/data";
+import { getProduct, getProducts, ingredients, Product } from '@/lib/data';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = products.find(p => p.id === params.id);
+export async function generateStaticParams() {
+  const products = await getProducts();
+  return products.map((product: Product) => ({
+    id: product.id.toString(),
+  }));
+}
+
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  console.log('Rendering product page for ID:', params.id);
+  const product = await getProduct(params.id);
   
   if (!product) {
     notFound();
   }
 
+  console.log('Product data:', { 
+    name: product.name, 
+    ingredients: product.ingredients 
+  });
+
+  console.log('Available ingredients:', ingredients.map(i => i.id));
+
   const productIngredients = ingredients.filter(ingredient => 
     product.ingredients.includes(ingredient.id)
   );
+
+  console.log('Filtered ingredients:', productIngredients.map(i => ({ id: i.id, name: i.name })));
 
   return (
     <div className="min-h-screen bg-background">
@@ -30,11 +46,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <div className="aspect-square overflow-hidden rounded-lg">
-              <img 
+            <div className="aspect-square overflow-hidden rounded-lg relative">
+              <Image 
                 src={product.image} 
                 alt={product.name}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -42,35 +60,67 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <div>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h1 className="text-4xl font-bold mb-2">{product.name}</h1>
-                <Badge variant="secondary" className="mb-4">
-                  {product.category}
-                </Badge>
+                <h1 className="text-4xl font-bold">{product.name}</h1>
+                <p className="mt-2 text-xl text-muted-foreground">${product.price}</p>
               </div>
-              <div className="text-3xl font-bold text-green-600">
-                ${product.price}
-              </div>
+              <Badge variant={
+                product.stockStatus === 'in stock' ? 'default' :
+                product.stockStatus === 'low stock' ? 'secondary' : 'destructive'
+              }>
+                {product.stockStatus}
+              </Badge>
             </div>
 
-            <div className="flex items-center gap-1 mb-6">
+            <div className="flex items-center gap-1 mt-2 mb-6">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-5 h-5 ${
-                    i < Math.floor(product.rating)
-                      ? "text-yellow-400 fill-yellow-400"
-                      : "text-gray-300"
-                  }`}
+                  className={`h-5 w-5 ${i < product.rating ? 'fill-primary text-primary' : 'fill-muted text-muted-foreground'}`}
                 />
               ))}
-              <span className="text-sm text-muted-foreground ml-2">
-                ({product.reviews} reviews)
-              </span>
+              <span className="ml-2 text-muted-foreground">({product.reviews} reviews)</span>
             </div>
 
-            <p className="text-lg text-muted-foreground mb-8">
-              {product.description}
-            </p>
+            <p className="text-lg mb-8">{product.description}</p>
+
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold mb-4">Key Ingredients</h2>
+              <div className="space-y-6">
+                {productIngredients.map((ingredient) => (
+                  <div key={ingredient.id} className="border rounded-lg p-4 hover:border-primary transition-colors">
+                    <div className="flex items-start gap-4">
+                      <div className="relative w-20 h-20">
+                        <Image 
+                          src={ingredient.image} 
+                          alt={ingredient.name}
+                          fill
+                          className="rounded-md object-cover"
+                          sizes="80px"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold">{ingredient.name}</h3>
+                        <p className="text-sm text-muted-foreground italic mb-2">{ingredient.scientificName}</p>
+                        <p className="text-sm mb-2">{ingredient.description}</p>
+                        <div className="text-sm">
+                          <span className="font-medium">Origin:</span> {ingredient.origin}
+                        </div>
+                        <div className="mt-2">
+                          <Badge variant="outline" className="mr-2">
+                            {ingredient.traditionalUses[0]}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">How to Use</h2>
+              <p>{product.usage}</p>
+            </div>
 
             <div className="space-y-6">
               <div>
@@ -80,11 +130,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                     <li key={index}>{benefit}</li>
                   ))}
                 </ul>
-              </div>
-
-              <div>
-                <h2 className="text-xl font-semibold mb-3">How to Use</h2>
-                <p className="text-muted-foreground">{product.usage}</p>
               </div>
 
               <div>
@@ -113,16 +158,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             </div>
 
             <div className="mt-8">
-              <Badge 
-                variant={
-                  product.stockStatus === 'in stock' ? 'success' :
-                  product.stockStatus === 'low stock' ? 'warning' : 'destructive'
-                }
-                className="mb-4"
-              >
-                {product.stockStatus}
-              </Badge>
-              
               <Button className="w-full bg-green-600 hover:bg-green-700">
                 Add to Cart
               </Button>

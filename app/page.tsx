@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Leaf, BadgeCheck, Droplet, Star } from "lucide-react";
 import Link from "next/link";
 import { products, testimonials } from "@/lib/data";
@@ -72,31 +73,16 @@ export default function Home() {
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                  <div className="flex items-center gap-1 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < Math.floor(product.rating)
-                            ? "text-yellow-400 fill-yellow-400"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">
-                      ({product.reviews} reviews)
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
                   <div className="flex justify-between items-center">
                     <span className="text-2xl font-bold text-green-600">
                       ${product.price}
                     </span>
-                    <Button asChild className="bg-green-600 hover:bg-green-700">
-                      <Link href={`/products#${product.id}`}>
-                        Learn More
-                      </Link>
-                    </Button>
+                    <Badge variant={
+                      product.stockStatus === 'in stock' ? 'default' :
+                      product.stockStatus === 'low stock' ? 'secondary' : 'destructive'
+                    }>
+                      {product.stockStatus}
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>

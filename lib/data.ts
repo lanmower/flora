@@ -25,11 +25,11 @@ export type Product = {
   usage: string;
   category: string;
   size: string;
-  rating: number;
-  reviews: number;
+  stockStatus: 'in stock' | 'low stock' | 'out of stock';
   featured?: boolean;
   new?: boolean;
-  stockStatus: 'in stock' | 'low stock' | 'out of stock';
+  rating: number;
+  reviews: number;
 };
 
 export const ingredients: Ingredient[] = [
@@ -128,79 +128,300 @@ export const ingredients: Ingredient[] = [
     ],
     safetyInfo: "Safe for short-term use. May interact with certain medications.",
     sustainabilityInfo: "Cultivated on certified organic farms in North America."
+  },
+  {
+    id: "gotu-kola",
+    name: "Gotu Kola",
+    description: "A revered herb in Ayurvedic medicine known for its cognitive and skin healing properties",
+    scientificName: "Centella asiatica",
+    origin: "Southeast Asia",
+    benefits: [
+      "Enhances cognitive function",
+      "Supports skin healing",
+      "Improves circulation",
+      "Reduces anxiety",
+      "Promotes wound healing",
+      "Supports collagen production"
+    ],
+    image: "https://images.unsplash.com/photo-1540845511934-7721dd7adec3?auto=format&fit=crop&q=80",
+    icon: Sprout,
+    traditionalUses: [
+      "Traditional brain tonic",
+      "Ayurvedic longevity herb",
+      "Skin healing applications"
+    ],
+    safetyInfo: "Generally safe. Consult healthcare provider if pregnant or taking medications.",
+    sustainabilityInfo: "Sustainably grown in controlled organic environments in India."
+  },
+  {
+    id: "dandelion",
+    name: "Dandelion Root",
+    description: "A common yet powerful herb known for its detoxifying and liver-supporting properties",
+    scientificName: "Taraxacum officinale",
+    origin: "Europe and North America",
+    benefits: [
+      "Supports liver health",
+      "Natural detoxifier",
+      "Rich in antioxidants",
+      "Aids digestion",
+      "Supports kidney function",
+      "Anti-inflammatory properties"
+    ],
+    image: "https://images.unsplash.com/photo-1558697698-9300a84a6a99?auto=format&fit=crop&q=80",
+    icon: Sun,
+    traditionalUses: [
+      "Traditional liver tonic",
+      "Natural diuretic",
+      "Folk medicine remedy"
+    ],
+    safetyInfo: "Safe for most people. May interact with certain medications.",
+    sustainabilityInfo: "Wildcrafted sustainably from pristine meadows."
+  },
+  {
+    id: "cannabis",
+    name: "Cannabis",
+    description: "A therapeutic plant with a rich history in traditional medicine and modern applications",
+    scientificName: "Cannabis sativa",
+    origin: "Central Asia",
+    benefits: [
+      "Pain management",
+      "Reduces inflammation",
+      "Supports sleep",
+      "Anxiety relief",
+      "Neuroprotective properties",
+      "Skin health support"
+    ],
+    image: "https://images.unsplash.com/photo-1536819114556-1c7906228ed2?auto=format&fit=crop&q=80",
+    icon: Leaf,
+    traditionalUses: [
+      "Traditional pain relief",
+      "Ancient medicinal use",
+      "Historical therapeutic applications"
+    ],
+    safetyInfo: "Use as directed. Follow local regulations and consult healthcare provider.",
+    sustainabilityInfo: "Grown in controlled environments following sustainable practices."
+  },
+  {
+    id: "comfrey",
+    name: "Comfrey",
+    description: "A powerful healing herb known for its tissue regeneration properties",
+    scientificName: "Symphytum officinale",
+    origin: "Europe",
+    benefits: [
+      "Supports bone health",
+      "Accelerates wound healing",
+      "Reduces inflammation",
+      "Soothes skin conditions",
+      "Aids muscle recovery",
+      "Promotes tissue repair"
+    ],
+    image: "https://images.unsplash.com/photo-1515586000433-45406d8e6662?auto=format&fit=crop&q=80",
+    icon: Heart,
+    traditionalUses: [
+      "Traditional wound healing",
+      "Bone and joint support",
+      "Historical poultice use"
+    ],
+    safetyInfo: "For external use only. Do not apply to open wounds.",
+    sustainabilityInfo: "Cultivated using organic methods in controlled environments."
+  },
+  {
+    id: "nasturtium",
+    name: "Nasturtium",
+    description: "A vibrant herb with both culinary and medicinal properties",
+    scientificName: "Tropaeolum majus",
+    origin: "South and Central America",
+    benefits: [
+      "Natural antibiotic",
+      "Immune support",
+      "Anti-inflammatory",
+      "Skin health",
+      "Respiratory support",
+      "Antioxidant rich"
+    ],
+    image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&q=80",
+    icon: CloudSun,
+    traditionalUses: [
+      "Traditional respiratory support",
+      "Historical immune tonic",
+      "Natural antibiotic"
+    ],
+    safetyInfo: "Generally safe. Avoid if allergic to cruciferous plants.",
+    sustainabilityInfo: "Grown in organic gardens using companion planting methods."
   }
 ];
 
 export const products: Product[] = [
+  // Gotu Kola Products
   {
-    id: "sleep-blend",
-    name: "Tranquil Dreams Sleep Blend",
-    description: "A harmonious blend of calming herbs to promote restful sleep and peaceful nights",
-    price: 29.99,
-    image: "https://images.unsplash.com/photo-1614806687394-7e093b514592?auto=format&fit=crop&q=80",
-    ingredients: ["chamomile", "lavender", "valerian"],
-    benefits: [
-      "Promotes deep, restful sleep",
-      "Reduces nighttime anxiety",
-      "100% natural ingredients",
-      "Non-habit forming",
-      "Improves sleep quality",
-      "Gentle and effective"
-    ],
-    usage: "Steep 1 teaspoon in hot water for 5-7 minutes before bedtime",
-    category: "Sleep & Relaxation",
-    size: "60g (30 servings)",
-    rating: 4.8,
-    reviews: 128,
-    featured: true,
-    stockStatus: 'in stock'
-  },
-  {
-    id: "immune-boost",
-    name: "Vital Shield Immune Support",
-    description: "A powerful blend of immune-boosting herbs to support your natural defenses",
-    price: 34.99,
-    image: "https://images.unsplash.com/photo-1512675828443-4f454c42253a?auto=format&fit=crop&q=80",
-    ingredients: ["echinacea"],
-    benefits: [
-      "Strengthens immune system",
-      "Supports respiratory health",
-      "Rich in antioxidants",
-      "Natural defense support",
-      "Year-round protection",
-      "Quick absorption"
-    ],
-    usage: "Take 2 capsules daily with meals",
-    category: "Immune Support",
-    size: "90 capsules",
-    rating: 4.9,
-    reviews: 256,
-    new: true,
-    stockStatus: 'in stock'
-  },
-  {
-    id: "calm-mind",
-    name: "Serene Mind Tincture",
-    description: "A concentrated blend of calming herbs for stress relief and mental clarity",
-    price: 39.99,
-    image: "https://images.unsplash.com/photo-1612538498456-e861df91d4d0?auto=format&fit=crop&q=80",
-    ingredients: ["lavender", "chamomile"],
-    benefits: [
-      "Reduces stress and anxiety",
-      "Improves focus",
-      "Promotes relaxation",
-      "Supports emotional balance",
-      "Fast-acting formula",
-      "Travel-friendly"
-    ],
-    usage: "Take 1-2 droppers under tongue as needed",
-    category: "Stress Relief",
+    id: "gotu-spagyric",
+    name: "Gotu Kola Spagyric Tincture",
+    description: "Advanced spagyric preparation for cognitive enhancement",
+    price: 49.99,
+    image: "/gotu-spagyric.jpg",
+    ingredients: ["gotu-kola"],
+    benefits: ["Mental clarity", "Tissue regeneration", "Circulatory support"],
+    usage: "15-20 drops under tongue 2x daily",
+    category: "Tinctures",
     size: "30ml",
+    stockStatus: 'in stock',
+    rating: 4.5,
+    reviews: 12
+  },
+  {
+    id: "gotu-infused-oil",
+    name: "Gotu Kola Infused Oil",
+    description: "Cold-infused organic oil for topical application",
+    price: 34.99,
+    image: "/gotu-oil.jpg",
+    ingredients: ["gotu-kola"],
+    benefits: ["Skin healing", "Collagen production", "Anti-inflammatory"],
+    usage: "Apply to affected area 2x daily",
+    category: "Oils",
+    size: "50ml",
+    stockStatus: 'in stock',
+    rating: 4.2,
+    reviews: 8
+  },
+
+  // Dandelion Product
+  {
+    id: "dandelion-spagyric",
+    name: "Dandelion Spagyric Tincture",
+    description: "Liver-supporting spagyric with detox properties",
+    price: 42.99,
+    image: "/dandelion-tincture.jpg",
+    ingredients: ["dandelion"],
+    benefits: ["Liver detox", "Digestive support", "Antioxidant rich"],
+    usage: "10-15 drops in water 3x daily",
+    category: "Tinctures",
+    size: "30ml",
+    stockStatus: 'in stock',
     rating: 4.7,
-    reviews: 89,
-    stockStatus: 'low stock'
+    reviews: 15
+  },
+
+  // Cannabis Products
+  {
+    id: "cannabis-feco",
+    name: "Cannabis Full Spectrum Oil (FECO)",
+    description: "Full extract cannabis oil with complete cannabinoid profile",
+    price: 89.99,
+    image: "/cannabis-feco.jpg",
+    ingredients: ["cannabis"],
+    benefits: ["Full spectrum relief", "Custom dosing", "Sublingual absorption"],
+    usage: "Dose as needed under tongue",
+    category: "Oils",
+    size: "30ml",
+    stockStatus: 'in stock',
+    rating: 4.8,
+    reviews: 20
+  },
+  {
+    id: "cannabis-cream",
+    name: "Cannabis Relief Cream",
+    description: "Potent topical analgesic with CBD isolate",
+    price: 54.99,
+    image: "/cannabis-cream.jpg",
+    ingredients: ["cannabis"],
+    benefits: ["Targeted pain relief", "Non-greasy formula", "Fast absorption"],
+    usage: "Apply to affected area every 4-6 hours",
+    category: "Topicals",
+    size: "100ml",
+    stockStatus: 'in stock',
+    rating: 4.6,
+    reviews: 10
+  },
+
+  // Comfrey Products
+  {
+    id: "comfrey-cream",
+    name: "Comfrey Repair Cream",
+    description: "Skin-regenerative cream with allantoin",
+    price: 39.99,
+    image: "/comfrey-cream.jpg",
+    ingredients: ["comfrey"],
+    benefits: ["Bone support", "Tissue repair", "Anti-inflammatory"],
+    usage: "Apply to unbroken skin 2x daily",
+    category: "Topicals",
+    size: "50ml",
+    stockStatus: 'in stock',
+    rating: 4.4,
+    reviews: 7
+  },
+  {
+    id: "comfrey-oil",
+    name: "Comfrey Infused Oil",
+    description: "Traditional herbal oil for external use",
+    price: 29.99,
+    image: "/comfrey-oil.jpg",
+    ingredients: ["comfrey"],
+    benefits: ["Muscle recovery", "Joint support", "Skin health"],
+    usage: "Massage into affected areas",
+    category: "Oils",
+    size: "100ml",
+    stockStatus: 'in stock',
+    rating: 4.3,
+    reviews: 5
+  },
+
+  // Other Products
+  {
+    id: "nasturtium-oil",
+    name: "Nasturtium Infused Oil",
+    description: "Antimicrobial oil with vibrant pigment",
+    price: 27.99,
+    image: "/nasturtium-oil.jpg",
+    ingredients: ["nasturtium"],
+    benefits: ["Skin conditioning", "Natural preservative", "Antioxidant"],
+    usage: "Use as massage/base oil",
+    category: "Oils",
+    size: "50ml",
+    stockStatus: 'in stock',
+    rating: 4.1,
+    reviews: 3
+  },
+  {
+    id: "hemp-soap",
+    name: "Handmade Hemp Soap",
+    description: "Pure cold-process soap with hemp oil",
+    price: 12.99,
+    image: "/hemp-soap.jpg",
+    ingredients: ["cannabis"],
+    benefits: ["Gentle cleansing", "Moisturizing", "Eco-friendly"],
+    usage: "Daily facial/body use",
+    category: "Body Care",
+    size: "100g",
+    stockStatus: 'in stock',
+    rating: 4.0,
+    reviews: 2
+  },
+  {
+    id: "cannabis-comfrey",
+    name: "Cannabis & Comfrey Cream",
+    description: "Synergistic blend for deep tissue repair",
+    price: 59.99,
+    image: "/cannabis-comfrey.jpg",
+    ingredients: ["cannabis", "comfrey"],
+    benefits: ["Muscle recovery", "Joint support", "Anti-inflammatory"],
+    usage: "Apply 3x daily",
+    category: "Topicals",
+    size: "100ml",
+    stockStatus: 'low stock',
+    rating: 4.2,
+    reviews: 5
   }
 ];
+
+export const getProducts = async (): Promise<Product[]> => {
+  console.log('Fetching all products...');
+  return products;
+};
+
+export const getProduct = async (id: string): Promise<Product | undefined> => {
+  console.log('Fetching product with ID:', id);
+  return products.find(product => product.id === id);
+};
 
 export const categories = [
   "Sleep & Relaxation",

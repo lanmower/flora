@@ -86,21 +86,6 @@ export default function ProductsPage() {
                   <Badge variant="secondary">{product.category}</Badge>
                 </div>
                 <p className="text-muted-foreground">{product.description}</p>
-                <div className="flex items-center gap-1 mt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(product.rating)
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-gray-300 dark:text-gray-600"
-                      }`}
-                    />
-                  ))}
-                  <span className="text-sm text-muted-foreground ml-2">
-                    ({product.reviews} reviews)
-                  </span>
-                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -112,16 +97,11 @@ export default function ProductsPage() {
                       ))}
                     </ul>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <p className="text-2xl font-bold text-green-600 dark:text-green-400">
                       ${product.price}
                     </p>
-                    <Badge variant={
-                      product.stockStatus === 'in stock' ? 'success' :
-                      product.stockStatus === 'low stock' ? 'warning' : 'destructive'
-                    }>
-                      {product.stockStatus}
-                    </Badge>
+                    <Badge variant="secondary">{product.category}</Badge>
                   </div>
                 </div>
               </CardContent>
