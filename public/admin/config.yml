@@ -1,0 +1,78 @@
+backend:
+  name: github
+  repo: your-github-username/flora
+  branch: main
+  auth_endpoint: api/auth
+
+media_folder: public/images
+public_path: /images
+upload_dir: 'public/images/uploads'
+
+collections:
+  - name: products
+    label: Products
+    folder: lib/products-data
+    create: true
+    slug: '{{slug}}'
+    format: json
+    fields:
+      - {label: ID, name: id, widget: string}
+      - {label: Name, name: name, widget: string}
+      - {label: Description, name: description, widget: text}
+      - {label: Category, name: category, widget: select, options: ["topical", "oil", "tincture", "extract", "soap"]}
+      - {label: Price, name: price, widget: number}
+      - {label: Image, name: image, widget: image}
+      - {label: Stock Status, name: stockStatus, widget: select, options: ["in stock", "low stock", "out of stock"]}
+      - {label: Rating, name: rating, widget: number, min: 0, max: 5, step: 0.1}
+      - {label: Reviews, name: reviews, widget: number}
+      - {label: Ingredients, name: ingredients, widget: list, field: {label: Ingredient ID, name: id, widget: string}}
+      - {label: Benefits, name: benefits, widget: list, field: {label: Benefit, name: text, widget: string}}
+      - {label: Usage, name: usage, widget: text}
+      - {label: Size, name: size, widget: string}
+      - {label: Featured, name: featured, widget: boolean, default: false}
+      - {label: New, name: new, widget: boolean, default: false}
+
+  - name: ingredients
+    label: Ingredients
+    folder: lib/ingredients-data
+    create: true
+    slug: '{{slug}}'
+    format: json
+    fields:
+      - {label: ID, name: id, widget: string}
+      - {label: Name, name: name, widget: string}
+      - {label: Scientific Name, name: scientificName, widget: string}
+      - {label: Description, name: description, widget: text}
+      - {label: Category, name: category, widget: select, options: ["healing", "detox", "skin", "immune"]}
+      - {label: Image, name: image, widget: image}
+      - {label: Origin, name: origin, widget: string}
+      - {label: Properties, name: properties, widget: list, field: {label: Property, name: text, widget: string}}
+      - {label: Traditional Uses, name: traditionalUses, widget: list, field: {label: Use, name: text, widget: string}}
+
+  - name: testimonials
+    label: Testimonials
+    folder: lib/testimonials-data
+    create: true
+    slug: '{{slug}}'
+    format: json
+    fields:
+      - {label: ID, name: id, widget: string}
+      - {label: Name, name: name, widget: string}
+      - {label: Role, name: role, widget: string}
+      - {label: Content, name: content, widget: text}
+      - {label: Rating, name: rating, widget: number, min: 1, max: 5}
+      - {label: Product ID, name: product, widget: string}
+      - {label: Image, name: image, widget: image}
+
+  - name: settings
+    label: Settings
+    files:
+      - name: site
+        label: Site Settings
+        file: lib/settings.json
+        format: json
+        fields:
+          - {label: Site Title, name: title, widget: string}
+          - {label: Site Description, name: description, widget: text}
+          - {label: Contact Email, name: contactEmail, widget: string}
+          - {label: Contact Phone, name: contactPhone, widget: string}

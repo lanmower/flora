@@ -14,25 +14,16 @@ export async function generateStaticParams() {
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
-  console.log('Rendering product page for ID:', params.id);
-  const product = await getProduct(params.id);
   
+  const product = await getProduct(params.id);
+
   if (!product) {
     notFound();
   }
 
-  console.log('Product data:', { 
-    name: product.name, 
-    ingredients: product.ingredients 
-  });
-
-  console.log('Available ingredients:', ingredients.map(i => i.id));
-
-  const productIngredients = ingredients.filter(ingredient => 
+  const productIngredients = ingredients.filter(ingredient =>
     product.ingredients.includes(ingredient.id)
   );
-
-  console.log('Filtered ingredients:', productIngredients.map(i => ({ id: i.id, name: i.name })));
 
   return (
     <div className="min-h-screen bg-background">
@@ -106,9 +97,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
                           <span className="font-medium">Origin:</span> {ingredient.origin}
                         </div>
                         <div className="mt-2">
-                          <Badge variant="outline" className="mr-2">
-                            {ingredient.traditionalUses[0]}
-                          </Badge>
+                          {ingredient.traditionalUses && ingredient.traditionalUses.length > 0 && (
+                            <Badge variant="outline" className="mr-2">
+                              {ingredient.traditionalUses[0]}
+                            </Badge>
+                          )}
                         </div>
                       </div>
                     </div>
